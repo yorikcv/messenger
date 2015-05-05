@@ -1,0 +1,31 @@
+<div class="container" ng-controller="MainCtrl">
+    <label class="pull-right" ng-show="user">
+        Welcome, <u><span>{{user.login}}</span></u>
+    </label>
+    <br/>
+    <h3>Conversation</h3>
+    <input type="text" class="form-control" placeholder="Search Conversations" ng-model="search.recipient.login">
+    <div>
+        <div ng-hide="conversations.length == 0">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>User</th>
+                        <th>Message</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in conversations | orderBy:'-messages[0].senddate' | filter:search | limitTo : limit" ng-click="showConversation(item.recipient.id)">
+                        <td>{{item.messages[0].senddate | amCalendar}}</td>
+                        <td>{{item.recipient.login}}</td>
+                        <td>{{item.messages[0].message}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="btn" ng-show="conversations.length > 10" ng-click="limit = limit + 10; console.log(limit);">Show More</button>
+        </div>
+        <div ng-show="conversations.length == 0">
+            <h3>No Conversations Available.</h3>
+        </div>
+    </div>

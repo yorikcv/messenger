@@ -1,0 +1,22 @@
+<div class="container" ng-controller="MessagesCtrl">
+    <a href="/#/">Back</a>
+    <div class="chat-input">
+        <input type="text" class="form-control" placeholder="Send Message" ng-model="message" ng-keypress="sendMessage($event)" autofocus>
+        <button class="btn">Reply</button>
+    </div>
+    
+    <div>
+        <div ng-repeat="msgs in messages">
+            <h4>{{msgs.message}}</h4>
+            <span>{{msgs.sendby}}
+        <small class="text-muted">{{msgs.senddate | amCalendar}}</small>
+      </span>
+        </div>
+        <div ng-show="!messages">
+            <h4>Loading Please wait</h4>
+        </div>
+        <div ng-show="messages && messages.length == 0">
+            <h4>No message yet!</h4>
+        </div>
+    </div>
+</div>
