@@ -9,8 +9,6 @@ angular.module('messengerApp')
                 user.login = 'yorik';
             }
 
-            $scope.limit = 5;
-
             $rootScope.user = user;
 
             conversations.get().then(

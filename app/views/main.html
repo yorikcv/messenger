@@ -16,7 +16,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="item in conversations | orderBy:'-messages[0].senddate' | filter:search | limitTo : limit" ng-click="showConversation(item.recipient.id)">
+                    <tr ng-repeat="item in conversations | orderBy:'-messages[0].senddate' | filter:search | limitTo : limit = 10" ng-click="showConversation(item.recipient.id)">
                         <td>{{item.messages[0].senddate | amCalendar}}</td>
                         <td>{{item.recipient.login}}</td>
                         <td>{{item.messages[0].message}}</td>
