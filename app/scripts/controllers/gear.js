@@ -1,31 +1,12 @@
 'use strict';
 
-/**
- * @ngdoc function
- * @name messengerApp.controller:GearctrlCtrl
- * @description
- * # GearctrlCtrl
- * Controller of the messengerApp
- */
 angular.module('messengerApp')
-    .controller('GearCtrl', ['$scope', 'gear', function($scope, gear) {
+    .controller('GearCtrl', ['$scope', '$filter', 'gear', function($scope, $filter, gear) {
 
         gear.loadGear().then(
             function(promise) {
                 $scope.lenses = promise.data.Lenses;
             });
-
-        function preLoadSelectsOptions() {
-        	gear.loadManufacturers().then(
-            function(promise) {
-                $scope.optionsManufacturers = promise.data.Manufacturer;
-            });
-
-            gear.loadLenses().then(
-            function(promise) {
-                $scope.optionsLenses = promise.data.Lenses;
-            });
-        }
 
         $scope.editLens = function(lens) {
             $scope.editedLens = lens;
@@ -42,17 +23,48 @@ angular.module('messengerApp')
         };
 
         $scope.saveEdits = function(lens) {
-            //send ajax to save
+            //send put ajax to save
 
             $scope.editedLens = null;
         };
 
         $scope.showFormAddLens = function() {
-        	preLoadSelectsOptions();
-        	$scope.addingLens = true;
 
+            if (!$scope.optionsManufacturers) {
+                gear.loadManufacturers().then(
+                    function(promise) {
+                        $scope.optionsManufacturers = promise.data.Manufacturer;
+                    });
+            }
+
+            $scope.addingLens = true;
+        };
+
+        $scope.loadLens = function(manufacturer) {
+
+            gear.loadLenses().then(
+                function(promise) {
+                    $scope.optionsLenses = $filter('getLensesByManufacturer')(promise.data.Lenses, manufacturer.Id);
+                });
 
         };
 
+        $scope.saveAdds = function() {
+            if ($scope.selectedLenses && $scope.selectedManufacturer) {
+                var newLens = {
+                    "Name": $scope.selectedLenses.Name,
+                    "ManufacturerName": $scope.selectedManufacturer.Name,
+                    "Condition": $scope.selectedCondition
+                };
+                $scope.lenses.push(newLens);
+                //send post ajax to save
+                $scope.optionsManufacturers = null;
+                $scope.optionsLenses = null;
+                $scope.selectedLenses = null;
+                $scope.selectedManufacturer = null;
+                $scope.selectedCondition = null;
+                $scope.addingLens = false;
+            }
+        };
 
     }]);
