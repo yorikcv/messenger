@@ -1,0 +1,27 @@
+{
+    "Manufacturer": [{
+        "Id": 1,
+        "Name": "Canon"
+    }, {
+        "Id": 5,
+        "Name": "Fujifilm"
+    }, {
+        "Id": 6,
+        "Name": "Nikon"
+    }, {
+        "Id": 3,
+        "Name": "Olympus"
+    }, {
+        "Id": 2,
+        "Name": "Panasonic"
+    }, {
+        "Id": 7,
+        "Name": "Samsung"
+    }, {
+        "Id": 4,
+        "Name": "Sony"
+    }]
+}
+
+
+

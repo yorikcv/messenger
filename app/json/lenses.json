@@ -1,0 +1,27 @@
+{
+    "Lenses": [{
+        "Name": "EF 50mm f/1.8 II",
+        "ManufacturerId": 1,
+        "Aperture": "1.8",
+        "FixedFocalLength": true,
+        "MinFocalLength": 50,
+        "MaxFocalLength": 50,
+        "Id": 2,
+        "Approved": true,
+        "LensMountName": "EF",
+        "LensMountId": 1,
+        "ManufacturerName": "Canon"
+    }, {
+        "Name": "EF 70-300",
+        "ManufacturerId": 1,
+        "Aperture": "4-5.6",
+        "FixedFocalLength": false,
+        "MinFocalLength": 70,
+        "MaxFocalLength": 300,
+        "Id": 1,
+        "Approved": true,
+        "LensMountName": "EF",
+        "LensMountId": 1,
+        "ManufacturerName": "Canon"
+    }]
+}

@@ -1,0 +1,74 @@
+<div class="container" ng-controller="GearCtrl">
+    <label class="pull-right" ng-show="user">
+        Welcome, <u><span>{{user.login}}</span></u>
+    </label>
+    <br/>
+    <h3>GEAR</h3>
+    <h4>Your Lenses</h4>
+    <div class="lensesGear">
+        <div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Manufacture</th>
+                        <th>Lens name</th>
+                        <th>Condition</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="lens in lenses | limitTo : limit = 10" ng-class="{editing: lens == editedLens}">
+                        <td>
+                            <div class="view">
+                                {{lens.ManufacturerName}}
+                            </div>
+                            <form ng-submit="saveEdits(lens)" ng-show="lens == editedLens">
+                                <input class="edit" ng-model="lens.ManufacturerName">
+                            </form>
+                        </td>
+                        <td>
+                            <div class="view">
+                                {{lens.Name}}
+                            </div>
+                            <form ng-submit="saveEdits(lens)" ng-show="lens == editedLens">
+                                <input class="edit" ng-model="lens.Name">
+                            </form>
+                        </td>
+                        <td>
+                            <div class="view">
+                                {{lens.Condition}}
+                                <button class="btn-xs" ng-click="editLens(lens)">Edit</button>
+                            </div>
+                            <form ng-show="lens == editedLens">
+                                <input class="edit" ng-model="lens.Condition">
+                                <button class="btn-xs" ng-click="saveEdits(lens)">Save</button>
+                                <button class="btn-xs" ng-click="cancelEdits(lens)">Cancel</button>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr ng-show="addingLens">
+                        <td>
+                            <form ng-submit="saveEdits(lens)">
+                                <select></select>
+                            </form>
+                        </td>
+                        <td>
+                            <form ng-submit="saveEdits(lens)">
+                                <select></select>
+                            </form>
+                        </td>
+                        <td>
+                            <form ng-submit="saveEdits(lens)">
+                                <input class="edit" ng-model="lens.Condition">
+                                <button class="btn-xs">Save</button>
+                                <button class="btn-xs" ng-click="cancelEdits(lens)">Cancel</button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="btn" ng-click="showFormAddLens()">Add Lens</button>
+        </div>
+        <!--      <div ng-show="conversations.length == 0">
+            <h3>No Conversations Available.</h3>
+        </div> -->
+    </div>

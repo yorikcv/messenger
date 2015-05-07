@@ -24,6 +24,10 @@ angular
                 templateUrl: 'views/messenges.html',
                 controller: 'MessagesCtrl'
             })
+            .when('/gear', {
+                templateUrl: 'views/gear.html',
+                controller: 'GearCtrl'
+            })
             .otherwise({
                 redirectTo: '/'
             });

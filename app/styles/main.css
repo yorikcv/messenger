@@ -87,3 +87,13 @@ body {
     border-bottom: 0;
   }
 }
+
+/*Gear Lenses*/
+
+.lensesGear tr.editing .edit {
+  display: block;
+}
+
+.lensesGear tr.editing .view {
+  display: none;
+}
