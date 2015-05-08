@@ -22,7 +22,7 @@
                                 {{lens.ManufacturerName}}
                             </div>
                             <form ng-submit="saveEdits(lens)" ng-show="lens == editedLens">
-                                <input class="edit" ng-model="lens.ManufacturerName">
+                                <select ng-model="selectedEditManufacturer" ng-change="loadLens(selectedEditManufacturer, 'edit')" ng-options="manufacturer.Name for manufacturer in optionsEditManufacturers"></select>
                             </form>
                         </td>
                         <td>
@@ -30,7 +30,8 @@
                                 {{lens.Name}}
                             </div>
                             <form ng-submit="saveEdits(lens)" ng-show="lens == editedLens">
-                                <input class="edit" ng-model="lens.Name">
+                                <select ng-model="selectedEditLenses" ng-options="lenses.Name for lenses in optionsEditLenses">
+                                </select>
                             </form>
                         </td>
                         <td>
@@ -48,23 +49,25 @@
                     </tr>
                     <tr ng-show="addingLens">
                         <td>
-                            <form ng-submit="saveEdits(lens)">
+                            <form ng-submit="messenges.html">
                                 <select ng-model="selectedManufacturer" ng-change="loadLens(selectedManufacturer)" ng-options="manufacturer.Name for manufacturer in optionsManufacturers">
                                     <option value="">-- choose Manufacturer --</option>
                                 </select>
                             </form>
                         </td>
                         <td>
-                            <form ng-submit="saveEdits(lens)">
-                                <select ng-model="selectedLenses" ng-options="lenses.Name for lenses in optionsLenses">
+                            <form ng-submit="">
+                                <select ng-model="selectedLenses" ng-options="lenses.Name for lenses in optionsLenses" lens-focus="optionsLenses.length">
                                     <option value="">-- choose Lenses --</option>
                                 </select>
                             </form>
                         </td>
                         <td>
-                            <input class="edit" ng-model="selectedCondition">
-                            <button class="btn-xs" ng-click="saveAdds()">Save</button>
-                            <button class="btn-xs" ng-click="deleteAdds()">Delete</button>
+                            <form ng-submit="saveEdits(lens)">
+                                <input class="edit" ng-model="selectedCondition">
+                                <button class="btn-xs" ng-click="saveAdds()">Save</button>
+                                <button class="btn-xs" ng-click="deleteAdds()">Delete</button>
+                            </form>
                         </td>
                     </tr>
                 </tbody>
@@ -75,8 +78,7 @@
             <h3>You dont have Lenses</h3>
         </div>
     </div>
-    <!-- Small modal -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".deleteLens">Small modal</button>
+    <!-- Confirm delete modal -->
     <div class="modal fade deleteLens" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
