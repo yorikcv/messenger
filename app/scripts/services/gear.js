@@ -3,8 +3,6 @@
 angular.module('messengerApp')
     .factory('gear', ['$http', '$q', function($http, $q) {
 
-        
-
         return {
             loadLenses: function() {
                 var deferred = $q.defer();

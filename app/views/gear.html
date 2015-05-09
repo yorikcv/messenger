@@ -6,84 +6,92 @@
     <h3>GEAR</h3>
     <h4>Your Lenses</h4>
     <div class="lensesGear">
-        <div ng-show="lenses.length != 0">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Manufacture</th>
-                        <th>Lens name</th>
-                        <th>Condition</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="lens in lenses | limitTo : limit = 10" ng-class="{editing: lens == lens.editedLens}">
-                        <td>
-                            <div class="view">
-                                {{lens.ManufacturerName}}
-                            </div>
-                            <form ng-submit="saveEdits(lens)" ng-show="lens == lens.editedLens">
-                                <select ng-model="lens.selectedEditManufacturer" ng-change="loadSelectLens(lens, 'edit')" ng-options="manufacturer.Name for manufacturer in lens.optionsEditManufacturers"></select>
-                            </form>
-                        </td>
-                        <td>
-                            <div class="view">
-                                {{lens.Name}}
-                            </div>
-                            <form ng-submit="saveEdits(lens)" ng-show="lens == lens.editedLens">
-                                <select ng-model="lens.selectedEditLenses" ng-options="lenses.Name for lenses in lens.optionsEditLenses">
-                                </select>
-                            </form>
-                        </td>
-                        <td>
-                            <div class="view">
-                                {{lens.Condition}}
-                            </div>
-                            <div ng-show="lens == lens.editedLens">
-                                <input class="edit" ng-model="lens.Condition">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="view">
-                                <button class="btn-xs" ng-click="editLens(lens)">Edit</button>
-                            </div>
-                            <div ng-show="lens == lens.editedLens">
-                                <button class="btn-xs" ng-click="saveEdits(lens)">Save</button>
-                                <button class="btn-xs" ng-click="deleteEdits(lens)" data-target=".deleteLens" data-toggle="modal">Delete</button>
-                                <button class="btn-xs" ng-click="cancelEdits(lens)">Cancel</button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr ng-repeat="newLens in newLenses">
-                        <td>
-                            <form name="formManufacturer" ng-submit="saveAdds(newLens)" ng-class="{errorValidation: formManufacturer.editManufacturer.$error.required}">
-                                <select name="editManufacturer" ng-model="newLens.selectedEditManufacturer" ng-change="loadSelectLens(newLens)" ng-options="manufacturer.Name for manufacturer in newLens.optionsManufacturers" required>
-                                    <option value="">-- choose Manufacturer --</option>
-                                </select>
-                            </form>
-                        </td>
-                        <td>
-                            <form name="formManuLenses" ng-submit="saveAdds(newLens)" ng-class="{errorValidation: formManuLenses.editLenses.$error.required}">
-                                <select name="editLenses" ng-model="newLens.selectedEditLenses" ng-options="lenses.Name for lenses in newLens.optionsLenses" lens-focus="newLens.optionsLenses.length" required>
-                                    <option value="">-- choose Lenses --</option>
-                                </select>
-                            </form>
-                        </td>
-                        <td>
-                            <form ng-submit="saveAdds(newLens)">
-                                <input class="edit" ng-model="newLens.selectedCondition">
-                            </form>
-                        </td>
-                        <td>
-                            <button class="btn-xs" ng-click="saveAdds(newLens)">Save</button>
-                            <button class="btn-xs" ng-click="deleteAdds(newLens)">Delete</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <button class="btn" ng-click="addLens()">Add Lens</button>
-        </div>
+        <table class="table">
+            <thead ng-show="lenses.length != 0">
+                <tr>
+                    <th>Manufacture</th>
+                    <th>Lens name</th>
+                    <th>Condition</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="lens in lenses | limitTo : limit = 10" ng-class="{editing: lens == lens.editedLens}">
+                    <td>
+                        <div class="view">
+                            {{lens.ManufacturerName}}
+                        </div>
+                        <form ng-submit="saveEdits(lens)" ng-show="lens == lens.editedLens">
+                            <select ng-model="lens.selectedEditManufacturer" ng-change="loadSelectLens(lens, 'edit')" ng-options="manufacturer.Name for manufacturer in lens.optionsEditManufacturers"></select>
+                            <option value="" ng-show="">-- choose Manufacturer --</option>
+                        </form>
+                    </td>
+                    <td>
+                        <div class="view">
+                            {{lens.Name}}
+                        </div>
+                        <form ng-submit="saveEdits(lens)" ng-show="lens == lens.editedLens">
+                            <select ng-model="lens.selectedEditLenses" ng-options="lenses.Name for lenses in lens.optionsEditLenses">
+                                <option value="" ng-show="">-- choose Lenses --</option>
+                            </select>
+                        </form>
+                    </td>
+                    <td>
+                        <div class="view">
+                            {{lens.Condition}}
+                        </div>
+                        <div ng-show="lens == lens.editedLens">
+                            <input class="edit" ng-model="lens.Condition">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="view">
+                            <button class="btn-xs" ng-click="editLens(lens)">Edit</button>
+                        </div>
+                        <div ng-show="lens == lens.editedLens">
+                            <button class="btn-xs" ng-click="saveEdits(lens)">Save</button>
+                            <button class="btn-xs" ng-click="deleteEdits(lens)" data-target=".deleteLens" data-toggle="modal">Delete</button>
+                            <button class="btn-xs" ng-click="cancelEdits(lens)">Cancel</button>
+                        </div>
+                    </td>
+                </tr>
+                <tr ng-repeat="newLens in newLenses">
+                    <td>
+                        <form name="formManufacturer" ng-submit="saveAdds(newLens)" ng-class="{errorValidation: formManufacturer.editManufacturer.$error.required}">
+                            <select name="editManufacturer" ng-model="newLens.selectedEditManufacturer" ng-change="loadSelectLens(newLens); checkToShowAddInput(newLens, 'manufacturer');" ng-options="manufacturer.Name for manufacturer in newLens.optionsManufacturers" required>
+                                <option value="" ng-show="">-- choose Manufacturer --</option>
+                            </select>
+                        </form>
+                        <form ng-submit="" ng-show="newLens.showAddInputManufacturer">
+                            <input class="edit" ng-model="newLens.selectedCondition">
+                            <button class="btn-xs" ng-click="saveAdds(newLens)">add</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form name="formManuLenses" ng-submit="saveAdds(newLens)" ng-class="{errorValidation: formManuLenses.editLenses.$error.required}">
+                            <select name="editLenses" ng-model="newLens.selectedEditLenses" ng-options="lenses.Name for lenses in newLens.optionsLenses" ng-change="checkToShowAddInput(newLens, 'lens')" lens-focus="newLens.optionsLenses.length" required>
+                                <option value="" ng-show="">-- choose Lenses --</option>
+                            </select>
+                        </form>
+                        <form ng-submit="" ng-show="newLens.showAddInputLens">
+                            <input class="edit" ng-model="newLens.selectedCondition">
+                            <button class="btn-xs" ng-click="saveAdds(newLens)">add</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form ng-submit="saveAdds(newLens)">
+                            <input class="edit" ng-model="newLens.selectedCondition">
+                        </form>
+                    </td>
+                    <td>
+                        <button class="btn-xs" ng-click="saveAdds(newLens)">Save</button>
+                        <button class="btn-xs" ng-click="deleteAdds(newLens)">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
         <div ng-show="lenses.length == 0">
             <h3>You dont have Lenses</h3>
         </div>
+        <button class="btn" ng-click="addLens()">Add Lens</button>
     </div>
 </div>

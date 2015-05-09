@@ -20,6 +20,24 @@ angular.module('messengerApp')
                 Lenses = promise.data.Lenses;
             });
 
+        function addOption(options, type) {
+            if (type === 'manufacturer') {
+                options.push({
+                    Name: "--add Manufacturer--",
+                    type: 'manufacturer'
+                });
+                return options;
+            }
+
+            if (type === 'lens') {
+                options.push({
+                    Name: "--add Lens--",
+                    type: 'lens'
+                });
+                return options;
+            }
+        }
+
         $scope.editLens = function(lens) {
             lens.editedLens = lens;
             var indexM = $filter('getIndexByName')(Manufacturers, lens.ManufacturerName),
@@ -57,25 +75,29 @@ angular.module('messengerApp')
 
         $scope.addLens = function() {
             $scope.newLenses.push({});
-
-            var arrayLastElem = $scope.newLenses.length - 1;
-            $scope.newLenses[arrayLastElem].optionsManufacturers = Manufacturers;
+            var arrayLastElem = $scope.newLenses.length - 1,
+                options = angular.copy(Manufacturers);
+            addOption(options, 'manufacturer');
+            $scope.newLenses[arrayLastElem].optionsManufacturers = options;
         };
 
         $scope.loadSelectLens = function(lens, type) {
             if (lens.selectedEditManufacturer) {
-                var options = $filter('getLensesByManufacturer')(Lenses, lens.selectedEditManufacturer.Id);
+                var manufacturerId = lens.selectedEditManufacturer.Id,
+                    options = $filter('getLensesByManufacturer')(Lenses, manufacturerId);
                 if (type === 'edit') {
                     lens.optionsEditLenses = options;
                     lens.selectedEditLenses = options[0];
                 } else {
+                    options = addOption(options, 'lens');
                     lens.optionsLenses = options;
                 }
             }
         };
 
         $scope.saveAdds = function(newLens) {
-            if (newLens.selectedEditLenses && newLens.selectedEditManufacturer) {
+            if (newLens.selectedEditLenses && newLens.selectedEditManufacturer &&
+                !newLens.selectedEditLenses.type && !newLens.selectedEditManufacturer.type) {
                 var newLensObject = {
                     "Name": newLens.selectedEditLenses.Name,
                     "ManufacturerName": newLens.selectedEditManufacturer.Name,
@@ -94,5 +116,19 @@ angular.module('messengerApp')
             var index = $scope.newLenses.indexOf(newLens);
             $scope.newLenses.splice(index, 1);
         };
+
+        $scope.checkToShowAddInput = function(newLens, type) {
+            if (type === 'manufacturer') {
+                newLens.showAddInputManufacturer = false;
+                newLens.showAddInputLens = false;
+                if (newLens.selectedEditManufacturer.type) newLens.showAddInputManufacturer = true;
+            }
+            if (type === 'lens') {
+                newLens.showAddInputLens = false;
+                if (newLens.selectedEditLenses.type) newLens.showAddInputLens = true;
+            }
+
+
+        }
 
     }]);
