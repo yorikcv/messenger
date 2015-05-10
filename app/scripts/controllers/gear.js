@@ -52,11 +52,11 @@ angular.module('messengerApp')
 
         $scope.saveEdits = function(lens) {
             //send put ajax to save
-
-            lens.editedLens = null;
-            lens.Name = lens.selectedEditLenses.Name;
-            lens.ManufacturerName = lens.selectedEditManufacturer.Name;
-
+            if (lens.selectedEditLenses && lens.selectedEditManufacturer) {
+                lens.editedLens = null;
+                lens.Name = lens.selectedEditLenses.Name;
+                lens.ManufacturerName = lens.selectedEditManufacturer.Name;
+            }
         };
 
         $scope.deleteEdits = function(lens) {
@@ -96,18 +96,39 @@ angular.module('messengerApp')
         };
 
         $scope.saveAdds = function(newLens) {
+            var newLensObject;
+            newLens.formsSubmited = true;
             if (newLens.selectedEditLenses && newLens.selectedEditManufacturer &&
-                !newLens.selectedEditLenses.type && !newLens.selectedEditManufacturer.type) {
-                var newLensObject = {
+                !newLens.showAddInputLens && !newLens.showAddInputManufacturer) {
+                newLensObject = {
                     "Name": newLens.selectedEditLenses.Name,
                     "ManufacturerName": newLens.selectedEditManufacturer.Name,
                     "Condition": newLens.selectedCondition
                 };
+            }
+            if(newLens.showAddInputLens && !newLens.showAddInputManufacturer &&
+                newLens.addedEditLenses) {
+                newLensObject = {
+                    "Name": newLens.addedEditLenses,
+                    "ManufacturerName": newLens.selectedEditManufacturer.Name,
+                    "Condition": newLens.selectedCondition
+                };
+            }
+            if(newLens.showAddInputLens && newLens.showAddInputManufacturer &&
+                newLens.addedEditLenses && newLens.addedEditManufacturer) {
+                newLensObject = {
+                    "Name": newLens.addedEditLenses,
+                    "ManufacturerName": newLens.addedEditManufacturer,
+                    "Condition": newLens.selectedCondition
+                };
+            }
 
+            if(newLensObject) {
                 $scope.lenses.push(newLensObject);
 
                 var index = $scope.newLenses.indexOf(newLens);
                 $scope.newLenses.splice(index, 1);
+
                 //send post ajax to save
             }
         };

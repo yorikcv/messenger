@@ -56,25 +56,19 @@
                 </tr>
                 <tr ng-repeat="newLens in newLenses">
                     <td>
-                        <form name="formManufacturer" ng-submit="saveAdds(newLens)" ng-class="{errorValidation: formManufacturer.editManufacturer.$error.required}">
-                            <select name="editManufacturer" ng-model="newLens.selectedEditManufacturer" ng-change="loadSelectLens(newLens); checkToShowAddInput(newLens, 'manufacturer');" ng-options="manufacturer.Name for manufacturer in newLens.optionsManufacturers" required>
+                        <form name="formManufacturer" ng-submit="saveAdds(newLens)">
+                            <select name="editManufacturer" ng-model="newLens.selectedEditManufacturer" ng-change="loadSelectLens(newLens); checkToShowAddInput(newLens, 'manufacturer');" ng-options="manufacturer.Name for manufacturer in newLens.optionsManufacturers" ng-class="{errorValidation: formManufacturer.editManufacturer.$error.required && newLens.formsSubmited}" required>
                                 <option value="" ng-show="">-- choose Manufacturer --</option>
                             </select>
-                        </form>
-                        <form ng-submit="" ng-show="newLens.showAddInputManufacturer">
-                            <input class="edit" ng-model="newLens.selectedCondition">
-                            <button class="btn-xs" ng-click="saveAdds(newLens)">add</button>
+                            <input name="addedEditManufacturer" class="edit" ng-model="newLens.addedEditManufacturer" ng-show="newLens.showAddInputManufacturer" ng-class="{errorValidation: formManufacturer.addedEditManufacturer.$error.required && newLens.formsSubmited && newLens.showAddInputManufacturer}" required>
                         </form>
                     </td>
                     <td>
-                        <form name="formManuLenses" ng-submit="saveAdds(newLens)" ng-class="{errorValidation: formManuLenses.editLenses.$error.required}">
-                            <select name="editLenses" ng-model="newLens.selectedEditLenses" ng-options="lenses.Name for lenses in newLens.optionsLenses" ng-change="checkToShowAddInput(newLens, 'lens')" lens-focus="newLens.optionsLenses.length" required>
+                        <form name="formLenses" ng-submit="saveAdds(newLens)">
+                            <select name="editLenses" ng-model="newLens.selectedEditLenses" ng-options="lenses.Name for lenses in newLens.optionsLenses" ng-change="checkToShowAddInput(newLens, 'lens')" lens-focus="newLens.optionsLenses.length" ng-class="{errorValidation: formLenses.editLenses.$error.required && newLens.formsSubmited}" required>
                                 <option value="" ng-show="">-- choose Lenses --</option>
                             </select>
-                        </form>
-                        <form ng-submit="" ng-show="newLens.showAddInputLens">
-                            <input class="edit" ng-model="newLens.selectedCondition">
-                            <button class="btn-xs" ng-click="saveAdds(newLens)">add</button>
+                            <input name="addedEditLenses" class="edit" ng-model="newLens.addedEditLenses" ng-show="newLens.showAddInputLens" ng-class="{errorValidation: formLenses.addedEditLenses.$error.required && newLens.formsSubmited && newLens.showAddInputLens}" required>
                         </form>
                     </td>
                     <td>
